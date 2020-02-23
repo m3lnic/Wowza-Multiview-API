@@ -8,7 +8,7 @@ const { WOWZA_INFORMATION } = require('../../config/config.json')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    const url = "http://148.88.67.141:8087/v2/servers/_defaultServer_/vhosts/_defaultVHost_/applications/live/instances"
+    const url = `http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.API_PORT}/v2/servers/${WOWZA_INFORMATION.SERVER_NAME}/vhosts/${WOWZA_INFORMATION.VHOST_NAME}/applications/${WOWZA_INFORMATION.APP_NAME}/instances`
     request.get(url, (error, response, body) => {
         if (error) {
             res.status(500).json({ error: "Unable to get data" })
@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 
                 const data = result.Instances.InstanceList[0].IncomingStreams.map(inStream => inStream.IncomingStream.map(streamInfo => {
                     if (streamInfo.SourceIp[0] !== "local (Transcoder)")
-                        responseJSON.links.push(`http://148.88.67.141:1935/live/${streamInfo.Name[0]}/manifest.mpd`)
+                        responseJSON.links.push(`http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.RTMP_PORT}/${WOWZA_INFORMATION.APP_NAME}/${streamInfo.Name[0]}/manifest.mpd`)
                 }))
 
                 console.log(responseJSON)
@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
                 res.status(200).json(responseJSON)
             })
         }
-    }).auth("LA1TV", "CliffordLikesLA1TV", false)
+    }).auth(WOWZA_INFORMATION.LOGIN_USERNAME, WOWZA_INFORMATION.LOGIN_PASSWORD, false)
 })
 
 module.exports = router

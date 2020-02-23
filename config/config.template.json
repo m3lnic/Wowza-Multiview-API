@@ -2,10 +2,14 @@
     "WOWZA_INFORMATION": {
         "ADDRESS": "",
         "API_PORT": "",
+        "RTMP_PORT": "",
         "SERVER_NAME": "",
         "VHOST_NAME": "",
         "APP_NAME": "",
         "LOGIN_USERNAME": "",
         "LOGIN_PASSWORD": ""
+    },
+    "EXPRESS_CONFIGURATION": {
+        "PORT": ""
     }
 }
