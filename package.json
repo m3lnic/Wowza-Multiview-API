@@ -1,0 +1,25 @@
+{
+  "name": "Wowza-Multiview-API",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m3lnic/Wowza-Multiview-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m3lnic/Wowza-Multiview-API/issues"
+  },
+  "homepage": "https://github.com/m3lnic/Wowza-Multiview-API#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "request": "^2.88.2",
+    "xml2js": "^0.4.23"
+  }
+}

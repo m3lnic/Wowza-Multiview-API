@@ -1,0 +1,98 @@
+{
+    "Instances": {
+        "$": {
+            "serverName": "_defaultServer_"
+        },
+        "InstanceList": [{
+            "Name": ["_definst_"],
+            "IncomingStreams": [{
+                "IncomingStream": [{
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["hello"],
+                    "SourceIp": ["rtmp://90.254.108.126:51940"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["hello_160p"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["hello_240p"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["hello_360p"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["hello_720p"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["hello_source"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }]
+            }],
+            "OutgoingStreams": [""],
+            "Recorders": [""],
+            "StreamGroups": [{
+                "StreamGroup": [{
+                    "GroupName": ["hello_all"],
+                    "InstanceName": ["_definst_"],
+                    "Members": [{
+                        "string": ["hello_160p", "hello_240p", "hello_360p", "hello_720p", "hello_source"]
+                    }],
+                    "IsTranscodeResult": ["true"]
+                }, {
+                    "GroupName": ["hello_mobile"],
+                    "InstanceName": ["_definst_"],
+                    "Members": [{
+                        "string": ["hello_160p", "hello_240p"]
+                    }],
+                    "IsTranscodeResult": ["true"]
+                }]
+            }]
+        }]
+    }
+}
