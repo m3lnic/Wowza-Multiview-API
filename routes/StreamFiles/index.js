@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
                         } else {
                             const tempObject = {}
                             tempObject.Name = Instance.Name[0].split('_')[0]
-                            tempObject.URL = `http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.RTMP_PORT}/${WOWZA_INFORMATION.APP_NAME}/${tempObject.Name}/manifest.mpd`
+                            tempObject.URL = `http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.RTMP_PORT}/${WOWZA_INFORMATION.APP_NAME}/ngrp:${tempObject.Name}_all/manifest.mpd`
                             BuiltResponse.Streams.push(tempObject)
                         }
                     })
@@ -59,7 +59,7 @@ router.get('/', (req, res) => {
                 }
             })
         }
-        
+
         res.status(BuiltResponse.Status).json(BuiltResponse)
     }).auth(WOWZA_INFORMATION.LOGIN_USERNAME, WOWZA_INFORMATION.LOGIN_PASSWORD, false)
 })
