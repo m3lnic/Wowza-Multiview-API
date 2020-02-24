@@ -25,34 +25,41 @@ router.get('/', (req, res) => {
                     BuiltResponse.Status = 400
                 }
 
-                const { Instances: { InstanceList } } = result
+                let { Instances: { InstanceList } } = result
+
+                // console.log(JSON.stringify(result))
 
                 if (InstanceList !== undefined && !parseError) {
-                    const { IncomingStreams } = InstanceList[0]
-                    const { IncomingStream } = IncomingStreams[0]
+                    let { IncomingStreams } = InstanceList[0]
+                    let { IncomingStream } = IncomingStreams[0]
 
                     BuiltResponse.Streams = []
                     BuiltResponse.Status = 200;
 
+                    try {
                     IncomingStream.map(Instance => {
-                        if (Instance.SourceIp[0] === "local (Transcoder)") {
-                            BuiltResponse.Streams.map(builtValue => {
-                                if (Instance.Name[0].split('_')[0] === builtValue.Name) {
-                                    const splitName = Instance.Name[0].split('_')
+                            if (Instance.SourceIp[0] === "local (Transcoder)") {
+                                BuiltResponse.Streams.map(builtValue => {
+                                    if (Instance.Name[0].split('_')[0] === builtValue.Name) {
+                                        let splitName = Instance.Name[0].split('_')
 
-                                    if (builtValue.Qualities === undefined)
-                                        builtValue.Qualities = []
+                                        if (builtValue.Qualities === undefined)
+                                            builtValue.Qualities = []
 
-                                    builtValue.Qualities.push(splitName[1])
-                                }
-                            })
-                        } else {
-                            const tempObject = {}
-                            tempObject.Name = Instance.Name[0].split('_')[0]
-                            tempObject.URL = `http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.RTMP_PORT}/${WOWZA_INFORMATION.APP_NAME}/ngrp:${tempObject.Name}_all/manifest.mpd`
-                            BuiltResponse.Streams.push(tempObject)
-                        }
-                    })
+                                        builtValue.Qualities.push(splitName[1])
+                                    }
+                                })
+                            } else {
+                                let tempObject = {}
+                                tempObject.Name = Instance.Name[0].split('_')[0]
+                                tempObject.URL = `http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.RTMP_PORT}/${WOWZA_INFORMATION.APP_NAME}/ngrp:${tempObject.Name}_all/manifest.mpd`
+                                BuiltResponse.Streams.push(tempObject)
+                            }
+                        })
+                    } catch (e) {
+                        BuiltResponse.Message = "No streams available"
+                        BuiltResponse.Status = 200;
+                    }
                 } else {
                     BuiltResponse.Message = "No streams available"
                     BuiltResponse.Status = 200;
@@ -60,7 +67,8 @@ router.get('/', (req, res) => {
             })
         }
 
-        res.status(BuiltResponse.Status).json(BuiltResponse)
+        // console.log('Response: ' + JSON.stringify(BuiltResponse))
+        res.status(BuiltResponse.Status).send(JSON.stringify(BuiltResponse))
     }).auth(WOWZA_INFORMATION.LOGIN_USERNAME, WOWZA_INFORMATION.LOGIN_PASSWORD, false)
 })
 

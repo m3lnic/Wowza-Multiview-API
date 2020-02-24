@@ -1,0 +1,119 @@
+{
+    "Instances": {
+        "$": {
+            "serverName": "_defaultServer_"
+        },
+        "InstanceList": [{
+            "Name": ["_definst_"],
+            "IncomingStreams": [{
+                "IncomingStream": [{
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["pancakes"],
+                    "SourceIp": ["rtmp://90.255.100.50:63100"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["pancakes_160p"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["pancakes_240p"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["pancakes_360p"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["pancakes_720p"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }, {
+                    "ApplicationInstance": ["_definst_"],
+                    "Name": ["pancakes_source"],
+                    "SourceIp": ["local (Transcoder)"],
+                    "IsRecordingSet": ["false"],
+                    "IsStreamManagerStream": ["false"],
+                    "IsPublishedToVOD": ["false"],
+                    "IsConnected": ["true"],
+                    "IsPTZEnabled": ["false"],
+                    "PtzPollingInterval": ["2000"],
+                    "PtzPollingIntervalMinimum": ["1000"]
+                }]
+            }],
+            "OutgoingStreams": [""],
+            "Recorders": [""],
+            "StreamGroups": [{
+                "StreamGroup": [{
+                    "GroupName": ["pancakes_all"],
+                    "InstanceName": ["_definst_"],
+                    "Members": [{
+                        "string": ["pancakes_160p", "pancakes_240p", "pancakes_360p", "pancakes_720p", "pancakes_source"]
+                    }],
+                    "IsTranscodeResult": ["true"]
+                }, {
+                    "GroupName": ["pancakes_mobile"],
+                    "InstanceName": ["_definst_"],
+                    "Members": [{
+                        "string": ["pancakes_160p", "pancakes_240p"]
+                    }],
+                    "IsTranscodeResult": ["true"]
+                }]
+            }]
+        }]
+    }
+}
+Response: {
+    "Streams": [{
+        "Name": "pancakes",
+        "URL": "http://148.88.67.141:1935/live/ngrp:pancakes_all/manifest.mpd",
+        "Qualities": ["160p", "240p", "360p", "720p", "source"]
+    }],
+    "Status": 200
+} {
+    "Instances": {
+        "$": {
+            "serverName": "_defaultServer_"
+        },
+        "InstanceList": [{
+            "Name": ["_definst_"],
+            "IncomingStreams": [""],
+            "OutgoingStreams": [""],
+            "Recorders": [""],
+            "StreamGroups": [""]
+        }]
+    }
+}
