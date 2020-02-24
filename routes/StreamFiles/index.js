@@ -9,26 +9,33 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
     const url = `http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.API_PORT}/v2/servers/${WOWZA_INFORMATION.SERVER_NAME}/vhosts/${WOWZA_INFORMATION.VHOST_NAME}/applications/${WOWZA_INFORMATION.APP_NAME}/instances`
-    request.get(url, (error, response, body) => {
-        if (error) {
-            console.log(error)
-            return
+
+    const BuiltResponse = {}
+
+    request.get(url, (requestError, response, body) => {
+        if (requestError) {
+            BuiltResponse.Error = requestError
+            BuiltResponse.Status = 400
         }
 
-        if (response) {
-            parseString(body, (err, result) => {
-                if (err) {
-                    console.log(err)
-                    return
+        if (response && !requestError) {
+            parseString(body, (parseError, result) => {
+                if (parseError) {
+                    BuiltResponse.Error = requestError
+                    BuiltResponse.Status = 400
                 }
 
+                console.log(result)
+
                 const { Instances: { InstanceList } } = result
-                const { IncomingStreams } = InstanceList[0]
-                const { IncomingStream } = IncomingStreams[0]
 
-                const BuiltResponse = { "Streams": [] }
+                if (InstanceList !== undefined && !parseError) {
+                    const { IncomingStreams } = InstanceList[0]
+                    const { IncomingStream } = IncomingStreams[0]
 
-                if (IncomingStream !== undefined) {
+                    BuiltResponse.Streams = []
+                    BuiltResponse.Status = 200;
+
                     IncomingStream.map(Instance => {
                         if (Instance.SourceIp[0] === "local (Transcoder)") {
                             BuiltResponse.Streams.map(builtValue => {
@@ -49,14 +56,15 @@ router.get('/', (req, res) => {
                         }
                     })
                 } else {
-
+                    BuiltResponse.Message = "No streams available"
+                    BuiltResponse.Status = 200;
                 }
-
-                console.log(JSON.stringify(BuiltResponse))
             })
         }
 
-        res.status(200).json({ "message": "TESTING" })
+        console.log(BuiltResponse)
+
+        res.status(BuiltResponse.Status).json(BuiltResponse)
     }).auth(WOWZA_INFORMATION.LOGIN_USERNAME, WOWZA_INFORMATION.LOGIN_PASSWORD, false)
 })
 
