@@ -25,8 +25,6 @@ router.get('/', (req, res) => {
                     BuiltResponse.Status = 400
                 }
 
-                console.log(result)
-
                 const { Instances: { InstanceList } } = result
 
                 if (InstanceList !== undefined && !parseError) {
@@ -61,9 +59,7 @@ router.get('/', (req, res) => {
                 }
             })
         }
-
-        console.log(BuiltResponse)
-
+        
         res.status(BuiltResponse.Status).json(BuiltResponse)
     }).auth(WOWZA_INFORMATION.LOGIN_USERNAME, WOWZA_INFORMATION.LOGIN_PASSWORD, false)
 })
