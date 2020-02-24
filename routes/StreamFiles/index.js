@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
                     IncomingStream.map(Instance => {
                         if (Instance.SourceIp[0] === "local (Transcoder)") {
                             BuiltResponse.Streams.map(builtValue => {
-                                if (Instance.Name[0].includes(`${builtValue.Name}_`)) {
+                                if (Instance.Name[0].split('_')[0] === builtValue.Name) {
                                     const splitName = Instance.Name[0].split('_')
 
                                     if (builtValue.Qualities === undefined)
@@ -44,11 +44,12 @@ router.get('/', (req, res) => {
                         } else {
                             const tempObject = {}
                             tempObject.Name = Instance.Name[0].split('_')[0]
+                            tempObject.URL = `http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.RTMP_PORT}/${WOWZA_INFORMATION.APP_NAME}/${tempObject.Name}/manifest.mpd`
                             BuiltResponse.Streams.push(tempObject)
                         }
                     })
                 } else {
-                    
+
                 }
 
                 console.log(JSON.stringify(BuiltResponse))
