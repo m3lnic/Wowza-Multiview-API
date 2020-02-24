@@ -11,33 +11,51 @@ router.get('/', (req, res) => {
     const url = `http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.API_PORT}/v2/servers/${WOWZA_INFORMATION.SERVER_NAME}/vhosts/${WOWZA_INFORMATION.VHOST_NAME}/applications/${WOWZA_INFORMATION.APP_NAME}/instances`
     request.get(url, (error, response, body) => {
         if (error) {
-            res.status(500).json({ error: "Unable to get data" })
+            console.log(error)
+            return
         }
 
         if (response) {
             parseString(body, (err, result) => {
                 if (err) {
-                    res.status(500).json({ error: "Unable to parse data" })
+                    console.log(err)
                     return
                 }
 
-                const responseJSON = { links: [] }
+                const { Instances: { InstanceList } } = result
+                const { IncomingStreams } = InstanceList[0]
+                const { IncomingStream } = IncomingStreams[0]
 
-                if (result.Instances.InstanceList === undefined) {
-                    res.status(200).json({message: "no data"})
-                    return
+                const BuiltResponse = { "Streams": [] }
+
+                if (IncomingStream !== undefined) {
+                    IncomingStream.map(Instance => {
+                        if (Instance.SourceIp[0] === "local (Transcoder)") {
+                            BuiltResponse.Streams.map(builtValue => {
+                                if (Instance.Name[0].includes(`${builtValue.Name}_`)) {
+                                    const splitName = Instance.Name[0].split('_')
+
+                                    if (builtValue.Qualities === undefined)
+                                        builtValue.Qualities = []
+
+                                    builtValue.Qualities.push(splitName[1])
+                                }
+                            })
+                        } else {
+                            const tempObject = {}
+                            tempObject.Name = Instance.Name[0].split('_')[0]
+                            BuiltResponse.Streams.push(tempObject)
+                        }
+                    })
+                } else {
+                    
                 }
 
-                const data = result.Instances.InstanceList[0].IncomingStreams.map(inStream => inStream.IncomingStream.map(streamInfo => {
-                    if (streamInfo.SourceIp[0] !== "local (Transcoder)")
-                        responseJSON.links.push(`http://${WOWZA_INFORMATION.ADDRESS}:${WOWZA_INFORMATION.RTMP_PORT}/${WOWZA_INFORMATION.APP_NAME}/${streamInfo.Name[0]}/manifest.mpd`)
-                }))
-
-                console.log(responseJSON)
-
-                res.status(200).json(responseJSON)
+                console.log(JSON.stringify(BuiltResponse))
             })
         }
+
+        res.status(200).json({ "message": "TESTING" })
     }).auth(WOWZA_INFORMATION.LOGIN_USERNAME, WOWZA_INFORMATION.LOGIN_PASSWORD, false)
 })
 
